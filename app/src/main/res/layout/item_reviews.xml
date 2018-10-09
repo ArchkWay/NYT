@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="4dp"
+    app:cardCornerRadius="6dp"
+    android:background="@color/colorPrimary"
+    android:foreground="?attr/selectableItemBackground"
+    >
+
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:id="@+id/ivPhotoTitle"
+        android:layout_width="190dp"
+        android:layout_height="140dp"
+        android:cropToPadding="true"
+        />
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:maxLines="1"
+        android:text="Something "
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/ivPhotoTitle"
+        />
+
+    <TextView
+        android:id="@+id/tvShortDescript"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorBlack"
+        android:maxLines="4"
+        android:text="@string/bla"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintLeft_toLeftOf="@id/tvTitle"
+        />
+
+    <TextView
+        android:id="@+id/tvNameAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:maxLines="1"
+        android:text="Johny Snow"
+        app:layout_constraintTop_toBottomOf="@id/tvShortDescript"
+        app:layout_constraintLeft_toLeftOf="@id/tvTitle"
+        />
+    <TextView
+        android:id="@+id/tvDateReview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:textSize="15sp"
+        android:layout_marginTop="20dp"
+        android:maxLines="1"
+        android:text="2000/01/09 12:34:08"
+        app:layout_constraintTop_toBottomOf="@id/tvNameAuthor"
+        app:layout_constraintLeft_toLeftOf="@id/tvTitle"
+        />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>
