@@ -14,12 +14,13 @@ import com.example.archek.nytreviews.model.reviews.ReviewsResponse;
 import com.example.archek.nytreviews.model.reviews.ReviewsResult;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
-    private List<ReviewsResult> reviewsResults = new ArrayList<>();
+    private List<ReviewsResult> reviewsResults = new LinkedList<>();
 
 
     @NonNull
@@ -58,22 +59,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         return 0;
     }
 
-    public int getViewTypeCount() {
-        return 1;
-    }
-
-
-
     public void replaceAll(List<ReviewsResult> reviewsToReplace) {
         reviewsResults.clear();
         reviewsResults.addAll(reviewsToReplace);
-
         notifyDataSetChanged();
     }
 
     public void replaceSearch(String searchBody, ReviewsResponse searchResponse){
         reviewsResults.clear();
-        ArrayList<ReviewsResult> tempResults = new ArrayList <>(  );
+        LinkedList<ReviewsResult> tempResults = new LinkedList <>(  );
         tempResults.addAll( searchResponse.getResults() );
 
         for (int i = 0; i < tempResults.size(); i++) {
@@ -82,6 +76,26 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
             }
             notifyDataSetChanged();
         }
+    }
+
+    public void replaceForTime(List<ReviewsResult> reviewsToReplace) {
+        reviewsResults.clear();
+        LinkedList<String > timeList = new LinkedList <>(  );
+        for(int i = 0; i < reviewsToReplace.size(); i++){
+            timeList.add( reviewsToReplace.get( i ).getDateUpdated() );
+        }
+        Collections.sort(timeList);
+        List<ReviewsResult> sortedResults = new LinkedList <>(  );
+        for(int i = 0; i < timeList.size(); i++){
+            for(int j = 0; j < reviewsToReplace.size(); j++){
+                if(reviewsToReplace.get(j).getDateUpdated().contains( timeList.get(i) )){
+                    sortedResults.add( reviewsToReplace.get(j) );
+                }
+            }
+        }
+        reviewsResults.addAll( sortedResults );
+
+        notifyDataSetChanged();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -12,10 +12,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.example.archek.nytreviews.critics.CriticAdapter;
 import com.example.archek.nytreviews.critics.CriticsFragment;
-import com.example.archek.nytreviews.model.critics.CriticResults;
-import com.example.archek.nytreviews.reviews.ReviewAdapter;
 import com.example.archek.nytreviews.reviews.ReviewsFragment;
 
 public class MainActivity extends AppCompatActivity  {
@@ -30,7 +27,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView( R.layout.activity_main );
         toolbar = findViewById( R.id.toolbar );
         setSupportActionBar( toolbar );
-        clMain = findViewById( R.id.clMain );
+
         if (savedInstanceState == null) {
             replaceFragment(new ReviewsFragment());
         }
@@ -40,13 +37,6 @@ public class MainActivity extends AppCompatActivity  {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate( R.menu.menu, menu );
-//        for(int i = 0; i < menu.size(); i++) {
-//            MenuItem item = menu.getItem( i );
-//            SpannableString spanString = new SpannableString( menu.getItem( i ).getTitle().toString() );
-//            int end = spanString.length();
-//            spanString.setSpan( new RelativeSizeSpan( 2f ), 0, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE );
-//            item.setTitle( spanString );
-//        }
         return true;
     }
 

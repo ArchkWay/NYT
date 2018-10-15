@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -33,9 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReviewsFragment extends Fragment {
-    DatePicker datePicker; //Instal variables
     TextView dateVision;
-    Button btnDateChange;
     ImageView ivSearch;
     String today;
     RecyclerView rvReviews;
@@ -43,48 +42,48 @@ public class ReviewsFragment extends Fragment {
     Call <ReviewsResponse> call;
     private final NYTService service = RestApi.createService( NYTService.class );
     Handler handler = new Handler(  );
+    SwipeRefreshLayout refreshLayout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate( R.layout.fragment_reviews, container, false );
+        View rootView = inflater.inflate( R.layout.fragment_reviews, container, false );
+        setupRecyclerView( rootView );
+        refreshLayout = rootView.getRootView().findViewById(R.id.swrLayoutReview);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshItems();
+            }
+        });
+        return rootView;
 
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
+        final EditText etSearch = view.findViewById( R.id.etSearch );
         setToday();
-        dateVision = view.findViewById( R.id.tvDate );//Инициализируем переменные/initiate variables
+        loadReviews();
+        dateVision = view.findViewById( R.id.tvDate );
         ivSearch = view.findViewById( R.id.ivSearch );
         dateVision.setText( today );
-        datePicker = view.findViewById( R.id.dpDatePicker );
-        btnDateChange = view.findViewById( R.id.btnDateChange );
-        btnDateChange.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buttonClickDateChange( v );
-            }
-        } );
 
-        setupRecyclerView( view );
-        loadReviews();
 
-        dateVision.setOnClickListener( new View.OnClickListener() {//Кнопка выбора даты(по умолчанию сегодня)
-            @Override                                               // Button choosing date(default - today)
-            public void onClick(View v) {
-                datePicker.setVisibility( View.VISIBLE );
-                rvReviews.setVisibility( View.INVISIBLE );
-            }
-        } );
+
 
         ivSearch.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText etSearch;
-                etSearch = view.findViewById( R.id.etSearch );
+
                 etSearch.setVisibility( View.VISIBLE );
-                ivSearch.setVisibility( View.INVISIBLE );
                 searchReviews( etSearch );
+            }
+        } );
+        dateVision.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterUpdate();
             }
         } );
 
@@ -108,23 +107,25 @@ public class ReviewsFragment extends Fragment {
         } );
 
     }
-    public void buttonClickDateChange (View view) {  //Обработка выбора даты/Working on date choose
-        String date;
-        int dayOfMonth = datePicker.getDayOfMonth();
-        int monthOfYear = datePicker.getMonth();
-        int year = datePicker.getYear();
-        String day;
-        if (dayOfMonth < 10) day = "0" + dayOfMonth;
-        else day = String.valueOf(dayOfMonth);
-        monthOfYear++;
-        String month;
-        if (monthOfYear < 10) month = "0" + monthOfYear;
-        else month = String.valueOf(monthOfYear);
-        date = day + "/" + month + "/" + year;
-        dateVision.setText( date );
-        datePicker.setVisibility( View.GONE );
-        rvReviews.setVisibility( View.VISIBLE );
+    private void filterUpdate() {
+        call = service.getReviews();
+        call.enqueue( new Callback <ReviewsResponse>() {
+            @Override
+            public void onResponse(Call <ReviewsResponse> call, Response <ReviewsResponse> response) {
+                ReviewsResponse reviewsResponse = response.body();
+                adapter.replaceForTime( reviewsResponse.getResults() );
+            }
+
+            @Override
+            public void onFailure(Call <ReviewsResponse> call, Throwable t) {
+                if (call.isCanceled()) {
+                    Toast.makeText( getContext(), R.string.error, Toast.LENGTH_SHORT ).show();
+                }
+            }
+        } );
+
     }
+
 
     public void setToday() { //Ставим сегодняшнюю дату
         @SuppressLint("SimpleDateFormat") // Instal todat date
@@ -183,6 +184,12 @@ public class ReviewsFragment extends Fragment {
                 },400 );
             }
         } );
+    }
+    void refreshItems() {
+        onItemsLoadComplete();
+    }
+    void onItemsLoadComplete() {
+        refreshLayout.setRefreshing(false);
     }
 
 

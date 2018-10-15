@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -35,38 +37,44 @@ import retrofit2.Response;
 public class CriticsFragment extends Fragment implements CriticAdapter.Callback {
 
 
-    CriticAdapter adapter = new CriticAdapter( this );
-    Call <CriticsResponse> call;
+    private CriticAdapter adapter = new CriticAdapter( this );
+    private Call <CriticsResponse> call;
     private final NYTService service = RestApi.createService( NYTService.class );
-    RecyclerView rvCritics;
-    Handler handler = new Handler(  );
+    private RecyclerView rvCritics;
+    private SwipeRefreshLayout refreshLayout;
+    private Handler handler = new Handler(  );
     ImageView ivSearch;
+
 //    final int spanCount = getResources().getInteger( R.integer.span_count );
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate( R.layout.fragment_critics, container, false );
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate( R.layout.fragment_critics, container, false );
+        setupRecyclerView( rootView );
+        refreshLayout = rootView.getRootView().findViewById(R.id.swrLayoutCritic);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+             @Override
+             public void onRefresh() {
+                 refreshItems();
+             }
+         });
+        return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         ivSearch = view.findViewById( R.id.ivSearchCritics );
-
-        setupRecyclerView( view );
+        final EditText etSearch = view.findViewById( R.id.etSearchCritics );
         loadCritics();
-        ivSearch.setOnClickListener( new View.OnClickListener() {
+        etSearch.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText etSearch;
-                etSearch = view.findViewById( R.id.etSearchCritics );
-                etSearch.setVisibility( View.VISIBLE );
-                ivSearch.setVisibility( View.INVISIBLE );
+
                 searchCritics( etSearch );
             }
         } );
-
     }
 
     private void loadCritics() {
@@ -89,13 +97,12 @@ public class CriticsFragment extends Fragment implements CriticAdapter.Callback 
     }
     private void setupRecyclerView(View view) {
         rvCritics = view.findViewById(R.id.rvCritics);
-        GridLayoutManager lm = new GridLayoutManager( getContext(), 2 );//GridLayoutManager для сетчатых квадратных картинок
+        final GridLayoutManager lm = new GridLayoutManager( getContext(), 2 );
         rvCritics.setLayoutManager( lm );
         rvCritics.setAdapter( adapter );
     }
 
-    public void searchCritics (EditText editText){//Метод для анализа вводимых данных, в поиск
-        //There is method for parsing input data to searching
+    public void searchCritics (EditText editText){
 
         editText.addTextChangedListener( new TextWatcher() {
             @Override
@@ -140,11 +147,15 @@ public class CriticsFragment extends Fragment implements CriticAdapter.Callback 
             }
         } );
     }
-
+    void refreshItems() {
+        onItemsLoadComplete();
+    }
+    void onItemsLoadComplete() {
+        refreshLayout.setRefreshing(false);
+    }
     @Override
     public void onCriticClick(CriticResults critic) {
         Intent intent = CriticInfo.makeIntent(getContext(),critic);
         startActivity( intent );
-
     }
 }

@@ -13,12 +13,12 @@ import com.example.archek.nytreviews.model.critics.CriticResults;
 import com.example.archek.nytreviews.model.critics.CriticsResponse;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CriticAdapter extends RecyclerView.Adapter<CriticAdapter.ViewHolder> {
 
-    private List<CriticResults> results = new ArrayList<>();
+    private List<CriticResults> critics = new LinkedList<>();
     private final Callback callback;
 
     public CriticAdapter(Callback callback) { //Конструктор с колбэком
@@ -36,7 +36,7 @@ public class CriticAdapter extends RecyclerView.Adapter<CriticAdapter.ViewHolder
         itemView.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CriticResults critic = results.get(holder.getAdapterPosition());
+                CriticResults critic = critics.get(holder.getAdapterPosition());
                 callback.onCriticClick( critic );
             }
         } );
@@ -45,30 +45,26 @@ public class CriticAdapter extends RecyclerView.Adapter<CriticAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CriticResults criticResults = results.get(position);
+        CriticResults criticResults = critics.get(position);
         holder.tvTitle.setText( criticResults.getDisplayName() );
         try {
              Picasso.get().load( criticResults.getMultimedia().getResource().getSrc() ).into( holder.ivPhoto );
         }
-       catch (Exception o){}
+       catch (Exception o){
+            Picasso.get().load(R.drawable.noimage).into(holder.ivPhoto);
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return results.size();
+        return critics.size();
     }
 
     @Override
     final public int getItemViewType(int position) {
         return position;
     }
-
-//    final public int getViewTypeCount() {
-//        return 1;
-//    }
-
-
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -86,20 +82,20 @@ public class CriticAdapter extends RecyclerView.Adapter<CriticAdapter.ViewHolder
     }
 
     public void replaceAll(CriticsResponse criticsResponse) {
-        results.clear();
-        results.addAll(criticsResponse.getResults());
+        critics.clear();
+        critics.addAll(criticsResponse.getResults());
         notifyDataSetChanged();
     }
 
 
     public void replaceSearch(String searchBody, CriticsResponse criticsResponse){
 
-        results.clear();
-        ArrayList<CriticResults> tempResults = new ArrayList <>(  );
+        critics.clear();
+        LinkedList<CriticResults> tempResults = new LinkedList <>(  );
         tempResults.addAll( criticsResponse.getResults());
         for(int i = 0; i < tempResults.size(); i++){
             if (tempResults.get( i ).getDisplayName().toLowerCase().contains( searchBody ) ) {
-                results.add( tempResults.get( i ) );
+                critics.add( tempResults.get( i ) );
             }
         }
 

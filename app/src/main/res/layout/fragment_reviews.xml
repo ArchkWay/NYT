@@ -19,8 +19,8 @@
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:visibility="gone"
+        android:layout_marginStart="40dp"
+        android:visibility="visible"
         android:background="@android:color/transparent"
         android:hint="@string/search"
         android:inputType="text"
@@ -28,14 +28,6 @@
         app:layout_constraintTop_toTopOf="@id/ivSearch"
         app:layout_constraintLeft_toLeftOf="parent"
         />
-    <DatePicker
-        android:id="@+id/dpDatePicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ivSearch"
-        android:visibility="gone"
-        tools:targetApi="lollipop">
-    </DatePicker>
 
     <ImageView
         android:id="@+id/ivCalendar"
@@ -61,30 +53,23 @@
         />
 
 
-    <Button
-        android:id="@+id/btnDateChange"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:background="@color/colorWhite"
-        android:textColor="@color/colorBlack"
-        android:text="ОК"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/dpDatePicker"
-        app:layout_constraintRight_toRightOf="@+id/dpDatePicker"
-        />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvReviews"
-        android:layout_marginTop="25dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvDate">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swrLayoutReview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvDate"
+            >
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvReviews"
+                android:layout_marginTop="25dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tvDate">
 
-    </android.support.v7.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
 
 
 </android.support.constraint.ConstraintLayout>

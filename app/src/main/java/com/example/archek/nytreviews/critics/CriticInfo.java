@@ -48,7 +48,7 @@ public class CriticInfo extends AppCompatActivity {
             catch (Exception p){
                 return new Intent( context, CriticInfo.class )
                         .putExtra( CriticInfo.EXTRA_NAME, critic.getDisplayName() )
-                        .putExtra( CriticInfo.EXTRA_BIO, critic.getBio().toString() );
+                        .putExtra( CriticInfo.EXTRA_STATUS, critic.getStatus() );
             }
         }
     }
@@ -69,16 +69,26 @@ public class CriticInfo extends AppCompatActivity {
         String urlPhoto = intent.getStringExtra( EXTRA_PHOTO );
         String bio = intent.getStringExtra( EXTRA_BIO );
         String status = intent.getStringExtra(EXTRA_STATUS);
+
         tvName.setText( name );
         try{
             if(!urlPhoto.equals( null )){
-                Picasso.get().load( urlPhoto ).into( ivPhoto );
-            }
+                Picasso.get().load( urlPhoto ).into( ivPhoto );}
         }
-        catch (Exception n){}
-        tvBio.setText( bio );
+        catch (Exception imageNull){
+            Picasso.get().load( R.drawable.noimage ).into( ivPhoto );
+        }
         tvStatus.setText( status );
-        tvBio.setText( bio );
+        try {
+            if (!bio.equals( "" )) {
+                tvBio.setText( bio );
+            } else {
+                tvBio.setText( R.string.no_bio );
+            }
+        } catch (Exception bioNull){
+            tvBio.setText( R.string.no_bio );
+        }
+
 
         btnBack.setOnClickListener( new View.OnClickListener() {
             @Override
