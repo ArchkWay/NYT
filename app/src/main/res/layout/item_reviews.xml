@@ -10,7 +10,6 @@
     android:layout_marginTop="4dp"
     app:cardCornerRadius="6dp"
     android:background="@color/colorPrimary"
-    android:foreground="?attr/selectableItemBackground"
     >
 
 <android.support.constraint.ConstraintLayout
@@ -39,9 +38,10 @@
 
     <TextView
         android:id="@+id/tvShortDescript"
-        android:layout_width="wrap_content"
+        android:layout_width="167dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+
         android:textColor="@color/colorBlack"
         android:maxLines="4"
         android:text="@string/bla"
@@ -69,10 +69,15 @@
         android:textSize="15sp"
         android:layout_marginTop="20dp"
         android:maxLines="1"
-        android:text="2000/01/09 12:34:08"
+        android:text="0000/00/00 00:00:00"
         app:layout_constraintTop_toBottomOf="@id/tvNameAuthor"
         app:layout_constraintLeft_toLeftOf="@id/tvTitle"
         />
-
+    <WebView
+        android:id="@+id/wbArticleUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

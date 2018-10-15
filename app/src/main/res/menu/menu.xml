@@ -6,12 +6,12 @@
 
     <item
         android:id="@+id/menu_reviews"
-        android:title="Reviews"
+        android:title="   Reviews   "
         app:showAsAction="always"
         />
     <item
         android:id="@+id/menu_critics"
-        android:title="Critics"
+        android:title="    Critics      "
         app:showAsAction="always"
         />
 

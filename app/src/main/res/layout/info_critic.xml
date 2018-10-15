@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="4dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="4dp"
+    app:cardCornerRadius="6dp"
+    android:background="@color/colorAccent"
+    >
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/infoClPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/ivPhotoCriticInfo"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:cropToPadding="true"
+                android:src="@drawable/noimage"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/infoClNameStatus"
+            android:layout_width="200dp"
+            android:layout_height="130dp"
+            app:layout_constraintLeft_toRightOf="@id/infoClPhoto"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/infoClPhoto"
+            >
+
+            <TextView
+                android:id="@+id/tvNameCriticInfo"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:text="Somebody "
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="24sp"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/tvStatusInfo"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="48dp"
+                android:background="@color/colorAccent"
+                android:text="part-time"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="@id/tvNameCriticInfo"
+                app:layout_constraintStart_toStartOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/infoClPhoto"
+            android:text="@string/bla"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvCriticList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvBio"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="90dp"
+            android:layout_height="40dp"
+            android:background="@color/colorWhite"
+            android:text="@string/back"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>
+
