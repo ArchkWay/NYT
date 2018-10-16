@@ -18,7 +18,25 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         style="@style/Toolbar"
-        />
+        >
+        <TextView
+            android:id="@+id/tvReviewTitle"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:text="Reviews"
+            android:textSize="25sp"
+            android:gravity="left"
+            />
+        <TextView
+            android:id="@+id/tvCriticTitle"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Critics"
+            android:textSize="25sp"
+            android:gravity="end"
+            />
+    </android.support.v7.widget.Toolbar>
 
     <TextView
         android:id="@+id/tvTitleFragment"
@@ -35,7 +53,5 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         />
-
-
 
 </android.support.constraint.ConstraintLayout>
