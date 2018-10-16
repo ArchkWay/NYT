@@ -14,13 +14,14 @@ import com.example.archek.nytreviews.model.reviews.ReviewsResponse;
 import com.example.archek.nytreviews.model.reviews.ReviewsResult;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
 
-    private List<ReviewsResult> reviewsResults = new LinkedList<>();
+    private List<ReviewsResult> reviewsResults = new ArrayList<>();//main list for results to adapter
 
 
     @NonNull
@@ -28,7 +29,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate( R.layout.item_reviews, parent, false);
-        final ViewHolder holder = new ViewHolder( itemView );
+        final ViewHolder holder = new ViewHolder( itemView ); //set on click listener, click inflate browser with corresponding url link
         itemView.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +41,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {//bind and load all views to holder
         ReviewsResult reviewsResult = reviewsResults.get(position);
         Picasso.get().load(reviewsResult.getMultimedia().getSrc()).into(holder.ivPhoto);
         holder.tvTitle.setText(reviewsResult.getDisplayTitle());
@@ -52,22 +53,17 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return reviewsResults.size();
-    }
+    } //count all items
 
-
-    public int getItemViewType(int position) {
-        return 0;
-    }
-
-    public void replaceAll(List<ReviewsResult> reviewsToReplace) {
+    public void replaceAll(List<ReviewsResult> reviewsToReplace) {//load all reviews in main list
         reviewsResults.clear();
         reviewsResults.addAll(reviewsToReplace);
         notifyDataSetChanged();
     }
 
-    public void replaceSearch(String searchBody, ReviewsResponse searchResponse){
+    public void replaceSearch(String searchBody, ReviewsResponse searchResponse){//load search reviews
         reviewsResults.clear();
-        LinkedList<ReviewsResult> tempResults = new LinkedList <>(  );
+        ArrayList<ReviewsResult> tempResults = new ArrayList <>(  );
         tempResults.addAll( searchResponse.getResults() );
 
         for (int i = 0; i < tempResults.size(); i++) {
@@ -78,7 +74,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         }
     }
 
-    public void replaceForTime(List<ReviewsResult> reviewsToReplace) {
+    public void replaceForTime(List<ReviewsResult> reviewsToReplace) {//load filtred reviews for update
         reviewsResults.clear();
         LinkedList<String > timeList = new LinkedList <>(  );
         for(int i = 0; i < reviewsToReplace.size(); i++){
@@ -100,16 +96,16 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ivPhoto;
-        TextView tvTitle;
-        TextView tvShortDesc;
-        TextView tvNameAuthor;
-        TextView tvDateReview;
-        WebView wbArticle;
+        private ImageView ivPhoto; //instal all views in holder
+        private TextView tvTitle;
+        private TextView tvShortDesc;
+        private TextView tvNameAuthor;
+        private TextView tvDateReview;
+        private WebView wbArticle;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ivPhoto = itemView.findViewById(R.id.ivPhotoTitle);
+            ivPhoto = itemView.findViewById(R.id.ivPhotoTitle);//initiate views
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvShortDesc = itemView.findViewById(R.id.tvShortDescript);
             tvNameAuthor = itemView.findViewById( R.id.tvNameAuthor );

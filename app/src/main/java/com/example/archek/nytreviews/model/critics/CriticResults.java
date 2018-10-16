@@ -2,22 +2,16 @@ package com.example.archek.nytreviews.model.critics;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-import java.util.List;
-
-public class CriticResults implements Serializable{
+public class CriticResults{//pojo models for RESTing work
     @SerializedName("display_name")
     private String displayName;
     @SerializedName("sort_name")
     private String sortName;
-    @SerializedName("status")
     private String status;
-    @SerializedName("bio")
     private Object bio;
     @SerializedName("seo_name")
     private String seoName;
 
-    @SerializedName("multimedia")
     private CriticMultimedia multimedia = null;
 
     public CriticMultimedia getMultimedia() {

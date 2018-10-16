@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:background="@android:color/transparent"
         android:inputType="text"
         android:hint="@string/search"

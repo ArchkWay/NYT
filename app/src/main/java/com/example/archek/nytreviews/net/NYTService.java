@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 
-public interface NYTService {
+public interface NYTService {//interface with all get quaries
 
     @GET("reviews/search.json?api-key=d858be33b19b4525abc9f15bbd1f30e3")
         Call<ReviewsResponse> getReviews();

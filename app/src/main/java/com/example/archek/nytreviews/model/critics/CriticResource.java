@@ -4,16 +4,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class CriticResource implements Serializable {
-    @SerializedName("type")
+public class CriticResource {//pojo models for RESTing work. Initalize all patametrs,
+    // but did't use all of them. Still set all, for further work, i hope so:)
     private String type;
-    @SerializedName("src")
     private String src;
-    @SerializedName("height")
     private Integer height;
-    @SerializedName("width")
     private Integer width;
-    @SerializedName("credit")
     private String credit;
 
     public String getType() {

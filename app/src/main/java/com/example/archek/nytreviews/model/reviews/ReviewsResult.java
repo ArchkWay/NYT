@@ -2,16 +2,15 @@ package com.example.archek.nytreviews.model.reviews;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ReviewsResult {
+public class ReviewsResult {//pojo models for RESTing work. Initalize all patametrs,
+    // but did't use all of them. Still set all, for further work, i hope so:)
     @SerializedName("display_title")
     private String displayTitle;
     @SerializedName("mpaa_rating")
     private String mpaaRating;
     @SerializedName("critics_pick")
     private Integer criticsPick;
-    @SerializedName("byline")
     private String byline;
-    @SerializedName("headline")
     private String headline;
     @SerializedName("summary_short")
     private String summaryShort;
@@ -21,9 +20,7 @@ public class ReviewsResult {
     private String openingDate;
     @SerializedName("date_updated")
     private String dateUpdated;
-    @SerializedName("link")
     private ReviewLink link;
-    @SerializedName("multimedia")
     private ReviewMultimedia multimedia;
 
     public String getDisplayTitle() {

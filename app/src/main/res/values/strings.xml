@@ -6,6 +6,9 @@
     <string name="back">Back</string>
     <string name="search">Search</string>
     <string name="no_bio">-no bio-</string>
+    <string name="no_status">no status</string>
+    <string name="reviews">Reviews</string>
+    <string name="critics">Critics</string>
 
 
 </resources>

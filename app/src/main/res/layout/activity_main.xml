@@ -12,28 +12,31 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+
         style="@style/Toolbar"
         >
         <TextView
             android:id="@+id/tvReviewTitle"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
+            android:textAlignment="center"
             android:text="Reviews"
-            android:textSize="25sp"
+            android:textSize="35sp"
             android:gravity="left"
             />
         <TextView
             android:id="@+id/tvCriticTitle"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:text="Critics"
-            android:textSize="25sp"
+            android:textSize="35sp"
             android:gravity="end"
             />
     </android.support.v7.widget.Toolbar>

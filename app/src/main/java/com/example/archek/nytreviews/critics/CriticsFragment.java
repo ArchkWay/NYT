@@ -8,27 +8,21 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.archek.nytreviews.MainActivity;
 import com.example.archek.nytreviews.R;
 import com.example.archek.nytreviews.model.critics.CriticResults;
 import com.example.archek.nytreviews.model.critics.CriticsResponse;
-import com.example.archek.nytreviews.model.reviews.ReviewsResponse;
 import com.example.archek.nytreviews.net.NYTService;
 import com.example.archek.nytreviews.net.RestApi;
-import com.example.archek.nytreviews.reviews.ReviewAdapter;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,8 +30,7 @@ import retrofit2.Response;
 
 public class CriticsFragment extends Fragment implements CriticAdapter.Callback {
 
-
-    private CriticAdapter adapter = new CriticAdapter( this );
+    private CriticAdapter adapter = new CriticAdapter( this );//instal variables/objects/servises
     private Call <CriticsResponse> call;
     private final NYTService service = RestApi.createService( NYTService.class );
     private RecyclerView rvCritics;
@@ -45,15 +38,13 @@ public class CriticsFragment extends Fragment implements CriticAdapter.Callback 
     private Handler handler = new Handler(  );
     ImageView ivSearch;
 
-//    final int spanCount = getResources().getInteger( R.integer.span_count );
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate( R.layout.fragment_critics, container, false );
         setupRecyclerView( rootView );
-        refreshLayout = rootView.getRootView().findViewById(R.id.swrLayoutCritic);
+        refreshLayout = rootView.getRootView().findViewById(R.id.swrLayoutCritic);//instal pull swipe refresh
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
              @Override
              public void onRefresh() {
@@ -65,19 +56,19 @@ public class CriticsFragment extends Fragment implements CriticAdapter.Callback 
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
-        ivSearch = view.findViewById( R.id.ivSearchCritics );
-        final EditText etSearch = view.findViewById( R.id.etSearchCritics );
-        loadCritics();
-        etSearch.setOnClickListener( new View.OnClickListener() {
+        ivSearch = view.findViewById( R.id.ivSearchCritics );//init search visuality
+        loadCritics();//load data to main list
+        ivSearch.setOnClickListener( new View.OnClickListener() {//search on click
             @Override
             public void onClick(View v) {
-
+                EditText etSearch = view.findViewById( R.id.etSearchCritics );
+                etSearch.setVisibility( View.VISIBLE );
                 searchCritics( etSearch );
             }
         } );
     }
 
-    private void loadCritics() {
+    private void loadCritics() {//method for loading critics from api to adapter
         call = service.getCritics();
         call.enqueue( new Callback <CriticsResponse>() {
             @Override
@@ -93,17 +84,17 @@ public class CriticsFragment extends Fragment implements CriticAdapter.Callback 
                 }
             }
         } );
-
     }
-    private void setupRecyclerView(View view) {
+
+    private void setupRecyclerView(View view) {//setup recyclerview and layout in grid form
         rvCritics = view.findViewById(R.id.rvCritics);
         final GridLayoutManager lm = new GridLayoutManager( getContext(), 2 );
         rvCritics.setLayoutManager( lm );
         rvCritics.setAdapter( adapter );
     }
 
-    public void searchCritics (EditText editText){
-
+    public void searchCritics (EditText editText){// method search inputed simbols in data and complicate reviews
+                                                // containing such simbols
         editText.addTextChangedListener( new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -133,7 +124,6 @@ public class CriticsFragment extends Fragment implements CriticAdapter.Callback 
                                     adapter.replaceSearch( searchBody.toString().toLowerCase(), response.body() );
                                 }
                             }
-
                             @Override
                             public void onFailure(Call <CriticsResponse> call, Throwable t) {
                                 if(!call.isCanceled()){
@@ -149,13 +139,13 @@ public class CriticsFragment extends Fragment implements CriticAdapter.Callback 
     }
     void refreshItems() {
         onItemsLoadComplete();
-    }
+    }//refresh data(pull-swipe)
     void onItemsLoadComplete() {
         refreshLayout.setRefreshing(false);
-    }
+    }//refresh data(pull-swipe)
     @Override
-    public void onCriticClick(CriticResults critic) {
-        Intent intent = CriticInfo.makeIntent(getContext(),critic);
+    public void onCriticClick(CriticResults critic) {//start InfoCriticActivity if any critic was clicked
+        Intent intent = CriticInfoActivity.makeIntent(getContext(),critic);
         startActivity( intent );
     }
 }

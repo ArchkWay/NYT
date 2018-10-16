@@ -34,22 +34,23 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ReviewsFragment extends Fragment {
-    TextView dateVision;
-    ImageView ivSearch;
-    String today;
-    RecyclerView rvReviews;
-    ReviewAdapter adapter = new ReviewAdapter(  );
-    Call <ReviewsResponse> call;
+    private TextView dateVision;//instal variables/components
+    private ImageView ivSearch;
+    private String today;
+    private RecyclerView rvReviews;
+    private ReviewAdapter adapter = new ReviewAdapter(  );
+    private Call <ReviewsResponse> call;
     private final NYTService service = RestApi.createService( NYTService.class );
-    Handler handler = new Handler(  );
-    SwipeRefreshLayout refreshLayout;
+    private Handler handler = new Handler(  );
+    private SwipeRefreshLayout refreshLayout;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate( R.layout.fragment_reviews, container, false );
         setupRecyclerView( rootView );
-        refreshLayout = rootView.getRootView().findViewById(R.id.swrLayoutReview);
+        refreshLayout = rootView.getRootView().findViewById(R.id.swrLayoutReview);//instal pullswipe
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -57,39 +58,34 @@ public class ReviewsFragment extends Fragment {
             }
         });
         return rootView;
-
     }
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
-        final EditText etSearch = view.findViewById( R.id.etSearch );
-        setToday();
-        loadReviews();
         dateVision = view.findViewById( R.id.tvDate );
         ivSearch = view.findViewById( R.id.ivSearch );
-        dateVision.setText( today );
-
-
-
+        setToday();//set actual date
+        dateVision.setText( today );//set date
+        loadReviews();//load list reviews
 
         ivSearch.setOnClickListener( new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(View v) {//instal listener on search
+                EditText etSearch = view.findViewById( R.id.etSearch );
                 etSearch.setVisibility( View.VISIBLE );
                 searchReviews( etSearch );
             }
         } );
-        dateVision.setOnClickListener( new View.OnClickListener() {
+
+        dateVision.setOnClickListener( new View.OnClickListener() {//instal listener on dateVision(date updateFilter)
             @Override
             public void onClick(View v) {
                 filterUpdate();
             }
         } );
-
     }
 
-    private void loadReviews() {
+    private void loadReviews() {//method for loading reviews from api to adapter
         call = service.getReviews();
         call.enqueue( new Callback <ReviewsResponse>() {
             @Override
@@ -107,7 +103,7 @@ public class ReviewsFragment extends Fragment {
         } );
 
     }
-    private void filterUpdate() {
+    private void filterUpdate() {//method for get date filtred reviews data( upped  earliest articles)
         call = service.getReviews();
         call.enqueue( new Callback <ReviewsResponse>() {
             @Override
@@ -127,21 +123,21 @@ public class ReviewsFragment extends Fragment {
     }
 
 
-    public void setToday() { //Ставим сегодняшнюю дату
-        @SuppressLint("SimpleDateFormat") // Instal todat date
+    public void setToday() { // Instal todat date in simple format
+        @SuppressLint("SimpleDateFormat")
                 SimpleDateFormat dateFormat = new SimpleDateFormat( "dd/MM/yyyy" );
         Date dater = new Date();
         today = dateFormat.format( dater );
     }
-    private void setupRecyclerView(View view) {
+    private void setupRecyclerView(View view) {//setup recyclerview and layouts stuff
         rvReviews = view.findViewById(R.id.rvReviews);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvReviews.setLayoutManager(layoutManager);
         rvReviews.setAdapter(adapter);
     }
 
-    public void searchReviews (EditText editText){//Метод для анализа вводимых данных, в поиск
-        //There is method for parsing input data to searching
+    public void searchReviews (EditText editText){// method search inputed simbols in data and complicate reviews
+                                                  // containing such simbols
         editText.addTextChangedListener( new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -187,10 +183,10 @@ public class ReviewsFragment extends Fragment {
     }
     void refreshItems() {
         onItemsLoadComplete();
-    }
+    }//refresh data(pull-swipe)
     void onItemsLoadComplete() {
         refreshLayout.setRefreshing(false);
-    }
+    }//refresh data(pull-swipe)
 
 
 }

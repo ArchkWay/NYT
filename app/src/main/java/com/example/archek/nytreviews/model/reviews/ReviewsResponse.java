@@ -4,17 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class ReviewsResponse {
+public class ReviewsResponse {//pojo models for RESTing work. Initalize all patametrs,
+    // but did't use all of them. Still set all, for further work, i hope so:)
 
-        @SerializedName("status")
         private String status;
-        @SerializedName("copyright")
         private String copyright;
         @SerializedName("has_more")
         private Boolean hasMore;
         @SerializedName("num_results")
         private Integer numResults;
-        @SerializedName("results")
         private List<ReviewsResult> results = null;
 
         public String getStatus() {

@@ -1,15 +1,11 @@
 package com.example.archek.nytreviews.model.reviews;
 
-import com.google.gson.annotations.SerializedName;
 
-public class ReviewMultimedia {
-    @SerializedName("type")
+public class ReviewMultimedia {//pojo models for RESTing work. Initalize all patametrs,
+    // but did't use all of them. Still set all, for further work, i hope so:)
     private String type;
-    @SerializedName("src")
     private String src;
-    @SerializedName("width")
     private Integer width;
-    @SerializedName("height")
     private Integer height;
 
     public String getType() {
