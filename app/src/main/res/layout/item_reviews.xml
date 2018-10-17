@@ -15,12 +15,13 @@
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/review_back"
     >
 
     <ImageView
         android:id="@+id/ivPhotoTitle"
-        android:layout_width="190dp"
-        android:layout_height="140dp"
+        android:layout_width="140dp"
+        android:layout_height="110dp"
         android:cropToPadding="true"
         />
     <TextView

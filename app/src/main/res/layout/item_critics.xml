@@ -16,11 +16,12 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/critic_back"
         >
 
         <ImageView
             android:id="@+id/ivPhotoCritic"
-            android:layout_width="220dp"
+            android:layout_width="130dp"
             android:layout_height="130dp"
             android:cropToPadding="true"
             android:src="@drawable/noimage"
