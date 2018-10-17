@@ -101,8 +101,8 @@ public class ReviewsFragment extends Fragment {
                 }
             }
         } );
-
     }
+
     private void filterUpdate() {//method for get date filtred reviews data( upped  earliest articles)
         call = service.getReviews();
         call.enqueue( new Callback <ReviewsResponse>() {

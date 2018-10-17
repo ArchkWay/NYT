@@ -1,4 +1,4 @@
-package com.example.archek.nytreviews.reviews;
+package com.example.archek.nytreviews.criticinfo;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -19,16 +19,17 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder> {
+public class CriticInfoAdapter extends RecyclerView.Adapter<CriticInfoAdapter.ViewHolder> {
 
     private List<ReviewsResult> reviewsResults = new ArrayList<>();//main list for results to adapter
+
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View itemView = inflater.inflate( R.layout.item_reviews, parent, false);
-        final ViewHolder holder = new ViewHolder( itemView ); //set on click listener, click inflate browser with corresponding url link
+        final ViewHolder holder = new ViewHolder( itemView );
         itemView.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,47 +50,26 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         holder.tvDateReview.setText( reviewsResult.getDateUpdated() );
     }
 
+
+
+    public void replaceAllReviews(List<ReviewsResult> reviewsToReplace, String name) {//load searching by name reviews in main list
+        reviewsResults.clear();
+        for(int i = 0; i < reviewsToReplace.size(); i++){
+            if(reviewsToReplace.get(i).getByline().toLowerCase().replaceAll("\\W", "").contains(name.toLowerCase().replaceAll("\\W", ""))){
+                reviewsResults.add( reviewsToReplace.get( i ) );
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return reviewsResults.size();
     } //count all items
 
-    public void replaceAll(List<ReviewsResult> reviewsToReplace) {//load all reviews in main list
+    public void replaceAllTest(List<ReviewsResult> reviewsToReplace) {//load all reviews in main list
         reviewsResults.clear();
-        reviewsResults.addAll(reviewsToReplace);
-        notifyDataSetChanged();
-    }
-
-    public void replaceSearch(String searchBody, ReviewsResponse searchResponse){//load search reviews
-        reviewsResults.clear();
-        ArrayList<ReviewsResult> tempResults = new ArrayList <>(  );
-        tempResults.addAll( searchResponse.getResults() );
-
-        for (int i = 0; i < tempResults.size(); i++) {
-            if (tempResults.get( i ).getDisplayTitle().toLowerCase().contains( searchBody ) || tempResults.get( i ).getByline().toLowerCase().contains( searchBody ) || tempResults.get( i ).getSummaryShort().toLowerCase().contains( searchBody )) {
-                reviewsResults.add( tempResults.get( i ) );
-            }
-            notifyDataSetChanged();
-        }
-    }
-
-    public void replaceForTime(List<ReviewsResult> reviewsToReplace) {//load filtred reviews for update
-        reviewsResults.clear();
-        LinkedList<String > timeList = new LinkedList <>(  );
-        for(int i = 0; i < reviewsToReplace.size(); i++){
-            timeList.add( reviewsToReplace.get( i ).getDateUpdated() );
-        }
-        Collections.sort(timeList);
-        List<ReviewsResult> sortedResults = new LinkedList <>(  );
-        for(int i = 0; i < timeList.size(); i++){
-            for(int j = 0; j < reviewsToReplace.size(); j++){
-                if(reviewsToReplace.get(j).getDateUpdated().contains( timeList.get(i) )){
-                    sortedResults.add( reviewsToReplace.get(j) );
-                }
-            }
-        }
-        reviewsResults.addAll( sortedResults );
-
+        reviewsResults.addAll( reviewsToReplace );
         notifyDataSetChanged();
     }
 

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.archek.nytreviews.R;
+import com.example.archek.nytreviews.criticinfo.CriticInfoActivity;
 import com.example.archek.nytreviews.model.critics.CriticResults;
 import com.example.archek.nytreviews.model.critics.CriticsResponse;
 import com.example.archek.nytreviews.net.NYTService;
