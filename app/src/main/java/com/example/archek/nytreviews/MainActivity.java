@@ -17,6 +17,7 @@ import com.example.archek.nytreviews.critics.CriticsFragment;
 import com.example.archek.nytreviews.reviews.ReviewsFragment;
 
 public class MainActivity extends AppCompatActivity {
+
     private TextView tvTitleFragment;//instal variables/components
     private ConstraintLayout clMain;
     private Toolbar toolbar;
