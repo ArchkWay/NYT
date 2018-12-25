@@ -41,8 +41,7 @@ public class ReviewsFragment extends Fragment {
     private ReviewAdapter adapter = new ReviewAdapter(  );
     private Call <ReviewsResponse> call;
     private final NYTService service = RestApi.createService( NYTService.class );
-    private Handler handler = new Handler(  );
-    private SwipeRefreshLayout refreshLayout;
+    private Handler handler = new Handler();
 
     @Nullable
     @Override
@@ -50,13 +49,7 @@ public class ReviewsFragment extends Fragment {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate( R.layout.fragment_reviews, container, false );
         setupRecyclerView( rootView );
-        refreshLayout = rootView.getRootView().findViewById(R.id.swrLayoutReview);//instal pullswipe
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshItems();
-            }
-        });
+
         return rootView;
     }
 
@@ -97,7 +90,7 @@ public class ReviewsFragment extends Fragment {
             @Override
             public void onFailure(Call <ReviewsResponse> call, Throwable t) {
                 if (call.isCanceled()) {
-                    Toast.makeText( getContext(), R.string.error, Toast.LENGTH_SHORT ).show();
+                    Toast.makeText( getContext(), R.string.error, Toast.LENGTH_SHORT).show();
                 }
             }
         } );
@@ -129,6 +122,7 @@ public class ReviewsFragment extends Fragment {
         Date dater = new Date();
         today = dateFormat.format( dater );
     }
+
     private void setupRecyclerView(View view) {//setup recyclerview and layouts stuff
         rvReviews = view.findViewById(R.id.rvReviews);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -181,12 +175,6 @@ public class ReviewsFragment extends Fragment {
             }
         } );
     }
-    void refreshItems() {
-        onItemsLoadComplete();
-    }//refresh data(pull-swipe)
-    void onItemsLoadComplete() {
-        refreshLayout.setRefreshing(false);
-    }//refresh data(pull-swipe)
 
 
 }

@@ -52,14 +52,6 @@
         app:layout_constraintLeft_toRightOf="@id/ivCalendar"
         />
 
-
-
-        <android.support.v4.widget.SwipeRefreshLayout
-            android:id="@+id/swrLayoutReview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tvDate"
-            >
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvReviews"
                 android:layout_marginTop="25dp"
@@ -68,8 +60,5 @@
                 app:layout_constraintTop_toBottomOf="@id/tvDate">
 
             </android.support.v7.widget.RecyclerView>
-        </android.support.v4.widget.SwipeRefreshLayout>
-
-
 
 </android.support.constraint.ConstraintLayout>

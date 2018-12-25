@@ -35,7 +35,6 @@ public class CriticsFragment extends Fragment implements CriticAdapter.Callback 
     private Call <CriticsResponse> call;
     private final NYTService service = RestApi.createService( NYTService.class );
     private RecyclerView rvCritics;
-    private SwipeRefreshLayout refreshLayout;
     private Handler handler = new Handler(  );
     ImageView ivSearch;
 
@@ -45,13 +44,6 @@ public class CriticsFragment extends Fragment implements CriticAdapter.Callback 
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate( R.layout.fragment_critics, container, false );
         setupRecyclerView( rootView );
-        refreshLayout = rootView.getRootView().findViewById(R.id.swrLayoutCritic);//instal pull swipe refresh
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-             @Override
-             public void onRefresh() {
-                 refreshItems();
-             }
-         });
         return rootView;
     }
 
@@ -138,12 +130,7 @@ public class CriticsFragment extends Fragment implements CriticAdapter.Callback 
             }
         } );
     }
-    void refreshItems() {
-        onItemsLoadComplete();
-    }//refresh data(pull-swipe)
-    void onItemsLoadComplete() {
-        refreshLayout.setRefreshing(false);
-    }//refresh data(pull-swipe)
+
     @Override
     public void onCriticClick(CriticResults critic) {//start InfoCriticActivity if any critic was clicked
         Intent intent = CriticInfoActivity.makeIntent(getContext(),critic);

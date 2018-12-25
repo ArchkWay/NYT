@@ -36,7 +36,7 @@ public class CriticAdapter extends RecyclerView.Adapter<CriticAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 CriticResults critic = critics.get(holder.getAdapterPosition());//set on click listener, click inflate browser with corresponding url link
-                callback.onCriticClick( critic );
+                callback.onCriticClick(critic);
             }
         } );
         return holder;
