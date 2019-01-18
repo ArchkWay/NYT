@@ -62,16 +62,18 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     public void replaceSearch(String searchBody, ReviewsResponse searchResponse){//load search reviews
         reviewsResults.clear();
-        ArrayList<ReviewsResult> tempResults = new ArrayList <>(  );
-        tempResults.addAll( searchResponse.getResults() );
+        ArrayList<ReviewsResult> tempResults = new ArrayList <>();
 
-        for (int i = 0; i < tempResults.size(); i++) {
-            if (tempResults.get( i ).getDisplayTitle().toLowerCase().contains( searchBody ) || tempResults.get( i ).getByline().toLowerCase().contains( searchBody ) || tempResults.get( i ).getSummaryShort().toLowerCase().contains( searchBody )) {
-                reviewsResults.add( tempResults.get( i ) );
+            tempResults.addAll(searchResponse.getResults());
+
+            for (int i = 0; i < tempResults.size(); i++) {
+                if (tempResults.get(i).getDisplayTitle().toLowerCase().contains(searchBody) || tempResults.get(i).getByline().toLowerCase().contains(searchBody) || tempResults.get(i).getSummaryShort().toLowerCase().contains(searchBody)) {
+                    reviewsResults.add(tempResults.get(i));
+                }
+                notifyDataSetChanged();
             }
-            notifyDataSetChanged();
-        }
     }
+
 
     public void replaceForTime(List<ReviewsResult> reviewsToReplace) {//load filtred reviews for update
         reviewsResults.clear();

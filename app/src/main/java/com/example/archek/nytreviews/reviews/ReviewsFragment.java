@@ -66,7 +66,7 @@ public class ReviewsFragment extends Fragment {
             public void onClick(View v) {//instal listener on search
                 EditText etSearch = view.findViewById( R.id.etSearch );
                 etSearch.setVisibility( View.VISIBLE );
-                searchReviews( etSearch );
+                searchReviews(etSearch);
             }
         } );
 
@@ -153,13 +153,10 @@ public class ReviewsFragment extends Fragment {
                         }
                         call = service.getSearchReviews(searchBody.toString());
                         //noinspection ConstantConditions
-                        call.enqueue( new Callback <ReviewsResponse>() {
+                        call.enqueue(new Callback <ReviewsResponse>() {
                             @Override
                             public void onResponse(Call <ReviewsResponse> call, Response<ReviewsResponse> response) {
-                                if(response.body() != null) {
-                                    //noinspection ConstantConditions
                                     adapter.replaceSearch( searchBody.toString().toLowerCase(), response.body() );
-                                }
                             }
 
                             @Override

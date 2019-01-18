@@ -68,7 +68,7 @@ public class CriticAdapter extends RecyclerView.Adapter<CriticAdapter.ViewHolder
     public void replaceSearch(String searchBody, CriticsResponse criticsResponse){//load search critics
         critics.clear();
         LinkedList<CriticResults> tempResults = new LinkedList <>(  );
-        tempResults.addAll( criticsResponse.getResults());
+        tempResults.addAll(criticsResponse.getResults());
         for(int i = 0; i < tempResults.size(); i++){
             if (tempResults.get( i ).getDisplayName().toLowerCase().contains( searchBody ) ) {
                 critics.add( tempResults.get( i ) );
